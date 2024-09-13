@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Save Excerpt</title>
+  </head>
+  <body>
+    <h1>Submit an Excerpt</h1>
+    <form action="{{ url_for('main.submit') }}" method="post">
+      <textarea name="excerpt" rows="10" cols="30"></textarea><br>
+      <input type="submit" value="Submit">
+    </form>
+    <h2>Submitted Excerpts:</h2>
+    <ul>
+      {% for excerpt in excerpts %}
+        <li>{{ excerpt }}</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <a href="{{ url_for('main.show_excerpts') }}">View All Saved Excerpts</a>
+  </body>
+</html>

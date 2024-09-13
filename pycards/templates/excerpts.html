@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Saved Excerpts</title>
+  </head>
+  <body>
+    <h1>Saved Excerpts</h1>
+    <ul>
+      {% for excerpt in excerpts %}
+        <li>{{ excerpt }}</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <a href="/">Back to Home</a>
+  </body>
+</html>

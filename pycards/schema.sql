@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS words (
     word TEXT NOT NULL,
     definition TEXT NOT NULL,
     sentence_id INTEGER,
-    FOREIGN KEY (sentence_id) REFERENCES sentences(id) ON DELETE CASCADE
+    FOREIGN KEY (sentence_id) REFERENCES sentences(id) 
 );

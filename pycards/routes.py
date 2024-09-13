@@ -4,7 +4,7 @@ from .models import get_db
 
 from pathlib import Path
 from .mdict_query.mdict_utils import MDXDict
-from .language.english import english_nlp
+from .language.english import english_nlp, getLemma
 
 olad_10_dir = "/home/fan/Documents/dicts/Eng/olad10"
 dict_name = "Oxford Advanced Learner's Dictionary 10th.mdx"
@@ -27,10 +27,12 @@ class Sentence:
     sentence_id: int
     words: list[Word]
     descriptions: str
+
+
 @dataclass
 class DBSentence:
     sentence_id: int
-    content:str
+    content: str
     descriptions: str
 
 
@@ -38,14 +40,20 @@ def parse_sentence(sentence):
     id = sentence[0]
     # words = [Word(word, word) for word in sentence[1].split()]
     sentence_text = sentence[1]
-    words = [Word(token.text, token.lemma_) for token in english_nlp(sentence_text)]
+    words = []
+    for token in english_nlp(sentence_text):
+        lemma = token.lemma_
+        if token.pos_ == "NOUN" and token.lemma_.endswith("ing"):
+            if not mdict.lookup(lemma):
+                lemma = getLemma(token.text, "VERB")[0]
+        words.append(Word(token.text, lemma))
     descriptions = sentence[2]
     return Sentence(sentence[1], id, words, descriptions)
 
 
 def render_home(keep_descriptions=False):
     db = get_db()
-    cur = db.execute("SELECT id,content,descriptions FROM sentences")
+    cur = db.execute("SELECT id,content,descriptions FROM sentences order by id desc")
     sentences = cur.fetchall()
     sentences = [parse_sentence(row) for row in sentences]
     return render_template("home.html", sentences=sentences)
@@ -97,7 +105,7 @@ def submit_word():
 @main_bp.route("/sentences")
 def show_sentences():
     db = get_db()
-    cur = db.execute("SELECT content FROM sentences")
+    cur = db.execute("SELECT content FROM sentences order by id desc")
     sentences = cur.fetchall()
     sentences = [parse_sentence(row) for row in sentences]
     return render_template("sentences.html", sentences=sentences)
@@ -119,17 +127,33 @@ def get_resource(path):
 @main_bp.route("/words")
 def show_words():
     db = get_db()
-    cur = db.execute("SELECT word,s.content, definition FROM words w LEFT JOIN sentences s ON w.sentence_id = s.id")
+    cur = db.execute(
+        "SELECT w.id,word,s.content, definition FROM words w LEFT JOIN sentences s ON w.sentence_id = s.id order by w.id desc"
+    )
     words = cur.fetchall()
     return render_template("words.html", words=words)
+
+
+@main_bp.route("/delete_word/<int:word_id>", methods=["POST"])
+def delete_word(word_id):
+    db = get_db()
+    db.execute("DELETE FROM words WHERE id = ?", (word_id,))
+    db.commit()
+    # conn.close()
+    return redirect(url_for("word_list"))
 
 
 @main_bp.route("/manage_sentences")
 def manage_sentences():
     conn = get_db()
-    sentences = conn.execute("SELECT id,content,descriptions FROM sentences").fetchall()
+    sentences = conn.execute(
+        "SELECT id,content,descriptions FROM sentences order by id desc"
+    ).fetchall()
     conn.close()
-    sentences = [DBSentence(sentence_id=row[0], content=row[1], descriptions=row[2]) for row in sentences]
+    sentences = [
+        DBSentence(sentence_id=row[0], content=row[1], descriptions=row[2])
+        for row in sentences
+    ]
     # breakpoint()
     return render_template("manage_sentences.html", sentences=sentences)
 

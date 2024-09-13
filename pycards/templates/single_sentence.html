@@ -1,0 +1,4 @@
+  <!-- {% set sentence_id = sentence.id %} -->
+  {% for word in sentence.words %}
+  <span class="word"  data-lemma="{{ word.lemma }}">{{ word.text }}</span>
+  {% endfor %}

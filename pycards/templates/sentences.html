@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Saved sentences</title>
+  </head>
+  <body>
+    <h1>Saved sentences</h1>
+    <ul>
+      {% for sentence in sentences %}
+      <li>
+      {% include "single_sentence.html" %}
+      {% endfor %}
+      </li>
+    </ul>
+    <br />
+    <a href="{{ url_for('main.home') }}">Back to Home</a>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!-- manage_sentences.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Manage Sentences</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sentence_table.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sentence</th>
+            <th>Descriptions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for sentence in sentences %}
+          <tr>
+            <td>{{ sentence.sentence_id }}</td>
+            <td>{{ sentence.content}}</td>
+            <td>{{ sentence.descriptions }}</td>
+            <td>
+              <a href="{{ url_for('main.delete_sentence', sentence_id=sentence.sentence_id) }}">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

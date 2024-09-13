@@ -1,0 +1,75 @@
+body,
+html {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left {
+    /* background-color: lightblue; */
+    width: 50%;
+    display: flex;
+    position: relative;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: relative;
+    margin-left: 10px;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: black;
+}
+
+.right .top,
+.right .bottom {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+
+.right::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+ul {
+    list-style-type: none;
+    padding: 5px;
+}
+
+.word_form {
+    margin-top: 20px;
+}
+
+iframe {
+    width: 100%;
+    border: 1px #ccc;
+}
+
+.submitted-sentence {
+    border: 1px solid #000;
+    /* You can customize the border style, color, and width */
+    padding: 10px;
+    /* Optional: Add some padding for better appearance */
+    margin-bottom: 10px;
+    /* Optional: Add some margin between list items */
+}

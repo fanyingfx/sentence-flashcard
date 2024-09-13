@@ -1,3 +1,3 @@
 class Config:
-	DATABASE = 'excerpts.db'
-	SECRET_KEY = 'your_secret_key'
+    DATABASE = "sentences.db"
+    SECRET_KEY = "your_secret_key"

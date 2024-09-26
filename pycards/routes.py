@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from flask import Blueprint, request, redirect, url_for, render_template
-from .models import get_db
+from .models import get_db_connection
 
 from pathlib import Path
 from .mdict_query.mdict_utils import MDXDict
@@ -52,11 +52,14 @@ def parse_sentence(sentence):
 
 
 def render_home(keep_descriptions=False):
-    db = get_db()
-    cur = db.execute("SELECT id,content,descriptions FROM sentences order by id desc")
-    sentences = cur.fetchall()
-    sentences = [parse_sentence(row) for row in sentences]
-    return render_template("home.html", sentences=sentences)
+    # db = get_db()
+    with get_db_connection() as db:
+        cur = db.execute(
+            "SELECT id,content,descriptions FROM sentences order by id desc"
+        )
+        sentences = cur.fetchall()
+        sentences = [parse_sentence(row) for row in sentences]
+        return render_template("home.html", sentences=sentences)
 
 
 @main_bp.route("/")
@@ -76,14 +79,14 @@ def submit():
     keep_descriptions = "keep_descriptions" in request.form
 
     if sentence:
-        db = get_db()
-        db.execute(
-            "INSERT INTO sentences (content,descriptions) VALUES (?,?)",
-            [sentence, descriptions],
-        )
-        db.commit()
-        if keep_descriptions:
-            return render_home(keep_descriptions=True)
+        with get_db_connection() as db:
+            db.execute(
+                "INSERT INTO sentences (content,descriptions) VALUES (?,?)",
+                [sentence, descriptions],
+            )
+            db.commit()
+            if keep_descriptions:
+                return render_home(keep_descriptions=True)
     return redirect(url_for("main.home"))
 
 
@@ -93,22 +96,22 @@ def submit_word():
     word_definition = request.form["wordDefinition"]
     sentence_id = request.form["sentenceId"]
     if selected_word and word_definition and sentence_id:
-        db = get_db()
-        db.execute(
-            "INSERT INTO words (word, definition, sentence_id) VALUES (?, ?, ?)",
-            [selected_word, word_definition, sentence_id],
-        )
-        db.commit()
+        with get_db_connection() as db:
+            db.execute(
+                "INSERT INTO words (word, definition, sentence_id) VALUES (?, ?, ?)",
+                [selected_word, word_definition, sentence_id],
+            )
+            db.commit()
     return redirect(url_for("main.home"))
 
 
 @main_bp.route("/sentences")
 def show_sentences():
-    db = get_db()
-    cur = db.execute("SELECT content FROM sentences order by id desc")
-    sentences = cur.fetchall()
-    sentences = [parse_sentence(row) for row in sentences]
-    return render_template("sentences.html", sentences=sentences)
+    with get_db_connection() as db:
+        cur = db.execute("SELECT content FROM sentences order by id desc")
+        sentences = cur.fetchall()
+        sentences = [parse_sentence(row) for row in sentences]
+        return render_template("sentences.html", sentences=sentences)
 
 
 @main_bp.route("/query_word/en")
@@ -126,41 +129,41 @@ def get_resource(path):
 
 @main_bp.route("/words")
 def show_words():
-    db = get_db()
-    cur = db.execute(
-        "SELECT w.id,word,s.content, definition FROM words w LEFT JOIN sentences s ON w.sentence_id = s.id order by w.id desc"
-    )
-    words = cur.fetchall()
-    return render_template("words.html", words=words)
+    with get_db_connection() as db:
+        cur = db.execute(
+            "SELECT w.id,word,s.content, definition FROM words w LEFT JOIN sentences s ON w.sentence_id = s.id order by w.id desc"
+        )
+        words = cur.fetchall()
+        return render_template("words.html", words=words)
 
 
 @main_bp.route("/delete_word/<int:word_id>", methods=["POST"])
 def delete_word(word_id):
-    db = get_db()
-    db.execute("DELETE FROM words WHERE id = ?", (word_id,))
-    db.commit()
-    # conn.close()
-    return redirect(url_for("word_list"))
+    with get_db_connection() as db:
+        db.execute("DELETE FROM words WHERE id = ?", (word_id,))
+        db.commit()
+        # conn.close()
+        return redirect(url_for("word_list"))
 
 
 @main_bp.route("/manage_sentences")
 def manage_sentences():
-    conn = get_db()
-    sentences = conn.execute(
-        "SELECT id,content,descriptions FROM sentences order by id desc"
-    ).fetchall()
-    conn.close()
-    sentences = [
-        DBSentence(sentence_id=row[0], content=row[1], descriptions=row[2])
-        for row in sentences
-    ]
-    # breakpoint()
-    return render_template("manage_sentences.html", sentences=sentences)
+    with get_db_connection() as conn:
+        sentences = conn.execute(
+            "SELECT id,content,descriptions FROM sentences order by id desc"
+        ).fetchall()
+        conn.close()
+        sentences = [
+            DBSentence(sentence_id=row[0], content=row[1], descriptions=row[2])
+            for row in sentences
+        ]
+        # breakpoint()
+        return render_template("manage_sentences.html", sentences=sentences)
 
 
 @main_bp.route("/delete_sentence/<int:sentence_id>")
 def delete_sentence(sentence_id):
-    db = get_db()
-    db.execute("DELETE FROM sentences WHERE id = ?", (sentence_id,))
-    db.commit()
-    return redirect(url_for("main.manage_sentences"))
+    with get_db_connection() as db:
+        db.execute("DELETE FROM sentences WHERE id = ?", (sentence_id,))
+        db.commit()
+        return redirect(url_for("main.manage_sentences"))

@@ -83,11 +83,23 @@ html {
     background-color: black;
 }
 
-.right .top,
+.right,
 .right .bottom {
     flex: 1;
     display: flex;
     position: relative;
+}
+
+.top {
+    flex: 1;
+    /* display: flex; */
+    width: 80%;
+    position: relative;
+}
+.top#selectedWord{
+    width:50%;
+    color: dimgray;
+
 }
 
 

@@ -21,7 +21,7 @@
       <div class="left">
         <div id="sentence-form">
           <form action="{{ url_for('main.submit') }}" method="post">
-            <textarea name="sentence" rows="5" cols="50"></textarea><br />
+            <textarea name="sentence" rows="5" cols="80"></textarea><br />
             <div>
 
             <textarea name="descriptions" rows="3" cols="50">{{ request.form.get('descriptions', '') }}</textarea>

@@ -8,8 +8,6 @@ from ..language import english
 sentence_bp = Blueprint("sentence", __name__, url_prefix="/sentence")
 
 
-
-
 @sentence_bp.route("/manage")
 def manage_sentences():
     with get_db_connection() as conn:

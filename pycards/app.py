@@ -17,7 +17,7 @@ app.register_blueprint(word_bp)
 def main():
     with app.app_context():
         init_db()
-    app.run(debug=True)
+    app.run(debug=False)
 
 
 if __name__ == "__main__":

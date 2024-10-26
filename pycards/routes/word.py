@@ -1,6 +1,5 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 
-from pycards.mdict_query.mdict_utils import MDXDict
 from ..models import get_db_connection
 from ..language import english
 

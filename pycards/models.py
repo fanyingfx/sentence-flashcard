@@ -18,8 +18,12 @@ def get_db():
 @contextmanager
 def get_db_connection():
     db = get_db()
-    yield db
-    db.close()
+    try:
+        yield db
+    except Exception as e:
+        print("Error",e)
+    finally:
+        db.close()
 
 
 def init_db():

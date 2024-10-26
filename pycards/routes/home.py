@@ -13,20 +13,21 @@ def home():
 
 
 def render_home(keep_descriptions=False):
+    sentences= []
     with get_db_connection() as db:
         cur = db.execute(
             "SELECT id,content,descriptions FROM sentences order by id desc"
         )
         sentences = cur.fetchall()
         sentences = [english.parse_sentence(row) for row in sentences]
-        return render_template("home.html", sentences=sentences)
+    return render_template("home.html", sentences=sentences)
 
 
 @home_bp.route("/submit", methods=["POST"])
 def submit():
     sentence = request.form["sentence"]
     descriptions = request.form["descriptions"]
-    keep_descriptions = "keep_descriptions" in request.form
+    # keep_descriptions = "keep_descriptions" in request.form
 
     if sentence:
         with get_db_connection() as db:
@@ -35,6 +36,5 @@ def submit():
                 [sentence, descriptions],
             )
             db.commit()
-            if keep_descriptions:
-                return render_home(keep_descriptions=True)
+        return render_home()
     return redirect(url_for("main.home"))

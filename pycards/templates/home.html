@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Save Sentence</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}" />
 
-  </head>
-  <body>
-    <div id="main-view">
+<head>
+  <meta charset="utf-8" />
+  <title>Save Sentence</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}" />
+
+</head>
+
+<body>
+  <div id="main-view">
     <div class="header">
       <nav>
         <ul>
@@ -24,19 +26,22 @@
             <textarea name="sentence" rows="5" cols="80"></textarea><br />
             <div>
 
-            <textarea name="descriptions" rows="3" cols="50">{{ request.form.get('descriptions', '') }}</textarea>
-            <input type="checkbox" name="keep_descriptions" id="keep_descriptions" {% if request.form.get('keep_descriptions') %}checked{% endif %} />
-            <label for="keep_descriptions">keep</label>
+              <textarea id="description" name="descriptions" rows="3"
+                cols="50">{{ request.form.get('descriptions', '') }}</textarea>
+              <input type="checkbox" name="keep_descriptions" id="keep_descriptions" {% if
+                request.form.get('keep_descriptions') %}checked{% endif %} />
+              <label for="keep_descriptions">keep</label>
             </div>
             <input type="submit" value="Submit" />
           </form>
           <div id="sentence-list">
 
-          <ul>
-            {% for sentence in sentences %}
-            <li class="submitted-sentence" title="{{ sentence.descriptions }}" data-sentence-id="{{ sentence.sentence_id }}">{% include "single_sentence.html" %}</li>
-            {% endfor %}
-          </ul>
+            <ul>
+              {% for sentence in sentences %}
+              <li class="submitted-sentence" title="{{ sentence.descriptions }}"
+                data-sentence-id="{{ sentence.sentence_id }}">{% include "single_sentence.html" %}</li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
@@ -47,33 +52,51 @@
             <div>
               <form id="wordForm" action="{{ url_for('word.submit_word') }}" method="post">
                 <!-- <label for="selectedWord">Selected Word:</label> -->
-                <input type="text" id="selectedWord" name="selectedWord" readonly style="margin-bottom: 10px; padding: 5px; width: 100%;" /><br />
+                <input type="text" id="selectedWord" name="selectedWord" readonly
+                  style="margin-bottom: 10px; padding: 5px; width: 100%;" /><br />
                 <label for="wordDefinition">Definition:</label>
-                <textarea id="wordDefinition" name="wordDefinition" rows="4" style="margin-bottom: 10px; padding: 5px; width: 100%;"></textarea><br />
+                <textarea id="wordDefinition" name="wordDefinition" rows="4"
+                  style="margin-bottom: 10px; padding: 5px; width: 100%;"></textarea><br />
                 <input type="hidden" id="sentenceId" name="sentenceId" />
                 <input type="submit" value="Submit" style="padding: 5px 10px;" />
               </form>
             </div>
           </div>
-      </div>
+        </div>
         <div class="bottom">
           <iframe id="wordIframe" src=""></iframe>
         </div>
-    </div>
+      </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", (event) => {
+        document.getElementsByName("description").value = localStorage.getItem("description") || '';
+        // Save form data to localStorage when user types
+        document.getElementById("description").addEventListener("input", (e) => {
+          localStorage.setItem("description", e.target.value);
+        });
+        document.getElementById("sentence-form").addEventListener("submit", (e) => {
+          if (document.getElementById("keep_descriptions").value !== "on") {
+            localStorage.removeItem("description");
+
+          }
+
+        });
         document.querySelectorAll("span.word").forEach(function (span) {
           span.addEventListener("click", function () {
             document.getElementById("selectedWord").value = this.textContent;
-            const lemma= this.getAttribute("data-lemma");
+            const lemma = this.getAttribute("data-lemma");
             const sentenceId = this.closest("li").getAttribute("data-sentence-id");
             console.log("sentenceId: ", sentenceId);
             document.getElementById("sentenceId").value = sentenceId;
             document.getElementById("wordIframe").src = `/word/query/en?word=${lemma}`;
           });
         });
+
       });
-        </script>
-  </body>
+
+
+    </script>
+</body>
+
 </html>

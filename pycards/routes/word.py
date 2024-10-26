@@ -1,17 +1,10 @@
-from pathlib import Path
 from flask import Blueprint, request, redirect, url_for, render_template
 
 from pycards.mdict_query.mdict_utils import MDXDict
 from ..models import get_db_connection
+from ..language import english
 
 word_bp = Blueprint("word", __name__, url_prefix="/word")
-olad_10_dir = "/home/fan/Documents/dicts/Eng/olad10"
-
-dict_name = "Oxford Advanced Learner's Dictionary 10th.mdx"
-
-MDXPATH = Path(olad_10_dir) / dict_name
-
-mdict = MDXDict(MDXPATH)
 
 
 @word_bp.route("/submit_word", methods=["POST"])
@@ -34,12 +27,12 @@ def query_word():
     word = request.args.get("word")
     if word is None:
         return "No word provided"
-    return mdict.lookup(word)
+    return english.mdict.lookup(word)
 
 
 @word_bp.route("/query/<path:path>")
 def get_resource(path):
-    return mdict.lookup(path)
+    return english.mdict.lookup(path)
 
 
 def emphasize_word(word_attrs):

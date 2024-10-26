@@ -1,12 +1,16 @@
 import sqlite3
 from flask import g, current_app
 from contextlib import contextmanager
+from datetime import datetime
+
+TODAY_STR = datetime.today().strftime("%Y-%m-%d")
 
 
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
-        g._database = sqlite3.connect(current_app.config["DATABASE"])
+        db_name = f"databases/{TODAY_STR}.{current_app.config["DATABASE"]}"
+        g._database = sqlite3.connect(db_name)
         db = g._database
     return db
 

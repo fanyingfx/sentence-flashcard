@@ -2,7 +2,7 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 from ..models import get_db_connection
 
-from ..language.english import parse_sentence
+from ..language import english
 
 home_bp = Blueprint("main", __name__)
 
@@ -18,7 +18,7 @@ def render_home(keep_descriptions=False):
             "SELECT id,content,descriptions FROM sentences order by id desc"
         )
         sentences = cur.fetchall()
-        sentences = [parse_sentence(row) for row in sentences]
+        sentences = [english.parse_sentence(row) for row in sentences]
         return render_template("home.html", sentences=sentences)
 
 

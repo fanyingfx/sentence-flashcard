@@ -4,7 +4,7 @@ import spacy
 from lemminflect import getLemma
 from pycards.mdict_query.mdict_utils import MDXDict
 
-__all__ = ["english_nlp", "parse_sentence"]
+__all__ = ["english_nlp", "parse_sentence", "mdict","DBSentence"]
 
 english_nlp = spacy.load("en_core_web_sm")
 

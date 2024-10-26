@@ -1,4 +1,3 @@
-# from dataclasses import dataclass
 from flask import Blueprint, request, redirect, url_for, render_template
 from ..models import get_db_connection
 
@@ -9,11 +8,7 @@ home_bp = Blueprint("main", __name__)
 
 @home_bp.route("/")
 def home():
-    return render_home()
-
-
-def render_home(keep_descriptions=False):
-    sentences= []
+    sentences = []
     with get_db_connection() as db:
         cur = db.execute(
             "SELECT id,content,descriptions FROM sentences order by id desc"
@@ -27,7 +22,6 @@ def render_home(keep_descriptions=False):
 def submit():
     sentence = request.form["sentence"]
     descriptions = request.form["descriptions"]
-    # keep_descriptions = "keep_descriptions" in request.form
 
     if sentence:
         with get_db_connection() as db:
@@ -36,5 +30,4 @@ def submit():
                 [sentence, descriptions],
             )
             db.commit()
-        return render_home()
     return redirect(url_for("main.home"))

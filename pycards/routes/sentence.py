@@ -1,6 +1,4 @@
-from dataclasses import dataclass
-from pathlib import Path
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import Blueprint, redirect, url_for, render_template
 
 from ..models import get_db_connection
 from ..language import english

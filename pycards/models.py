@@ -18,12 +18,6 @@ def get_db_connection():
     db.close()
 
 
-def close_connection(exception):
-    db = getattr(g, "_database", None)
-    if db is not None:
-        db.close()
-
-
 def init_db():
     db = get_db()
     with current_app.open_resource("schema.sql", mode="r") as f:

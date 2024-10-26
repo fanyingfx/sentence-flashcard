@@ -6,8 +6,10 @@ from contextlib import contextmanager
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
-        db = g._database = sqlite3.connect(current_app.config["DATABASE"])
+        g._database = sqlite3.connect(current_app.config["DATABASE"])
+        db = g._database
     return db
+
 
 @contextmanager
 def get_db_connection():
@@ -20,6 +22,7 @@ def close_connection(exception):
     db = getattr(g, "_database", None)
     if db is not None:
         db.close()
+
 
 def init_db():
     db = get_db()

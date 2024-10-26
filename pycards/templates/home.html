@@ -12,8 +12,8 @@
       <nav>
         <ul>
           <li><a href="{{ url_for('main.home') }}">Home</a></li>
-          <li><a href="{{ url_for('main.manage_sentences') }}">Manage Sentences</a></li>
-          <li><a href="{{ url_for('main.show_words') }}">Word List</a></li>
+          <li><a href="{{ url_for('sentence.manage_sentences') }}">Manage Sentences</a></li>
+          <li><a href="{{ url_for('word.show_words') }}">Word List</a></li>
         </ul>
       </nav>
     </div>
@@ -45,7 +45,7 @@
           <div>
             <h2>Word</h2>
             <div>
-              <form id="wordForm" action="{{ url_for('main.submit_word') }}" method="post">
+              <form id="wordForm" action="{{ url_for('word.submit_word') }}" method="post">
                 <!-- <label for="selectedWord">Selected Word:</label> -->
                 <input type="text" id="selectedWord" name="selectedWord" readonly style="margin-bottom: 10px; padding: 5px; width: 100%;" /><br />
                 <label for="wordDefinition">Definition:</label>
@@ -70,7 +70,7 @@
             const sentenceId = this.closest("li").getAttribute("data-sentence-id");
             console.log("sentenceId: ", sentenceId);
             document.getElementById("sentenceId").value = sentenceId;
-            document.getElementById("wordIframe").src = `/query_word/en?word=${lemma}`;
+            document.getElementById("wordIframe").src = `/word/query/en?word=${lemma}`;
           });
         });
       });

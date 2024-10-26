@@ -17,17 +17,19 @@
             <th>Word</th>
             <th>Sentence</th>
             <th>Definition</th>
+            <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {% for id,word, sentence,definition in words %}
+          {% for id,word, sentence,definition,description in words %}
           <tr>
             <td>{{ word }}</td>
-            <td>{{ sentence }}</td>
+            <td>{{ sentence |safe }}</td>
             <td>{{ definition }}</td>
+            <td>{{ description}}</td>
             <td>
-              <a href="{{ url_for('main.delete_word', word_id=id) }}">Delete</a>
+              <a href="{{ url_for('word.delete_word', word_id=id) }}">Delete</a>
             </td>
           </tr>
           {% endfor %}

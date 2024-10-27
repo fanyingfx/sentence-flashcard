@@ -1,14 +1,13 @@
 [project]
 name = "pycards"
 version = "0.1.0"
-description = "Add your description here"
+description = "anki-sentence-cards"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "ruff>=0.6.4",
     "fugashi>=1.3.2",
     "flask>=3.0.3",
-    "flask-htmx>=0.3.2",
     "spacy>=3.7.6",
     "numpy==1.26.3",
     "pip>=24.2",

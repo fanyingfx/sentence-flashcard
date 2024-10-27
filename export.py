@@ -4,7 +4,6 @@ import csv
 
 TODAY_STR = datetime.today().strftime("%Y-%m-%d")
 DATABASE_NAME = f"databases/{TODAY_STR}.sentences.db"
-db = sqlite3.connect(DATABASE_NAME)
 
 
 def emphasize_word(word_attrs):
@@ -27,14 +26,15 @@ def save_file(words):
         writer.writerow(fieldnames)
         writer.writerows(word for word in words if word[1])
 
+if __name__ == "__main__":
+    db = sqlite3.connect(DATABASE_NAME)
+    cur = db.execute(
+        "SELECT words.word,sentences.content, definition,sentences.descriptions FROM words  LEFT JOIN sentences  ON words.sentence_id = sentences.id order by words.id desc"
+    )
 
-cur = db.execute(
-    "SELECT words.word,sentences.content, definition,sentences.descriptions FROM words  LEFT JOIN sentences  ON words.sentence_id = sentences.id order by words.id desc"
-)
-
-words = cur.fetchall()
-if not words:
-    print("db is empty")
-    exit(1)
-words = [emphasize_word(word) for word in words]
-save_file(words)
+    words = cur.fetchall()
+    if not words:
+        print("db is empty")
+        exit(1)
+    words = [emphasize_word(word) for word in words]
+    save_file(words)

@@ -25,12 +25,10 @@
           <form action="{{ url_for('main.submit') }}" method="post">
             <textarea name="sentence" rows="5" cols="80"></textarea><br />
             <div>
-
-              <textarea id="description" name="descriptions" rows="3"
-                cols="50">{{ request.form.get('descriptions', '') }}</textarea>
-              <input type="checkbox" name="keep_descriptions" id="keep_descriptions" {% if
-                request.form.get('keep_descriptions') %}checked{% endif %} />
-              <label for="keep_descriptions">keep</label>
+              <textarea id="description" name="descriptions" rows="3" cols="50"></textarea>
+              <input type="checkbox" name="keep_description" id="keep_description" {% if
+                request.form.get('keep_description') %}checked{% endif %} />
+              <label for="keep_description">keep</label>
             </div>
             <input type="submit" value="Submit" />
           </form>
@@ -52,7 +50,8 @@
             <div>
               <form id="wordForm" action="{{ url_for('word.submit_word') }}" method="post">
                 <!-- <label for="selectedWord">Selected Word:</label> -->
-                <input type="text" id="selectedWord" name="selectedWord" readonly style="margin-bottom: 10px; color: slategray;" /><br />
+                <input type="text" id="selectedWord" name="selectedWord" readonly
+                  style="margin-bottom: 10px; color: slategray;" /><br />
                 <label for="wordDefinition">Definition:</label>
                 <textarea id="wordDefinition" name="wordDefinition" rows="4"
                   style="margin-bottom: 10px; padding: 5px; width: 100%;"></textarea><br />
@@ -69,17 +68,21 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", (event) => {
-        document.getElementsByName("description").value = localStorage.getItem("description") || '';
-        // Save form data to localStorage when user types
-        document.getElementById("description").addEventListener("input", (e) => {
-          localStorage.setItem("description", e.target.value);
-        });
+        let localStorageKey = "mydescription"
+        let desc = localStorage.getItem(localStorageKey) || '';
+        document.getElementById("description").value = desc;
+        if (desc !== "") {
+          document.getElementById("keep_description").checked = true;
+        }
         document.getElementById("sentence-form").addEventListener("submit", (e) => {
-          if (document.getElementById("keep_descriptions").value !== "on") {
-            localStorage.removeItem("description");
-
+          if (!document.getElementById("keep_description").checked) {
+            console.log("remove mydescription");
+            localStorage.removeItem(localStorageKey);
+          } else {
+            let desc = document.getElementById("description").value;
+            console.log("update mydescription", desc);
+            localStorage.setItem(localStorageKey, desc);
           }
-
         });
         document.querySelectorAll("span.word").forEach(function (span) {
           span.addEventListener("click", function () {

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, render_template
+from flask import Blueprint, jsonify, redirect, request, url_for, render_template
 
 from ..models import get_db_connection
 from ..language import english
@@ -26,3 +26,20 @@ def delete_sentence(sentence_id):
         db.execute("DELETE FROM sentences WHERE id = ?", (sentence_id,))
         db.commit()
         return redirect(url_for("sentence.manage_sentences"))
+
+@sentence_bp.route("/submit", methods=["POST"])
+def submit_json():
+    data = request.get_json()
+    sentence = data.get("sentence")
+    descriptions = data.get("descriptions")
+
+    if sentence:
+        with get_db_connection() as db:
+            db.execute(
+                "INSERT INTO sentences (content,descriptions) VALUES (?,?)",
+                [sentence, descriptions],
+            )
+            db.commit()
+        return jsonify({"status": "success"}), 200
+    else:
+        return jsonify({"status": "error", "message": "Sentence is required"}), 400

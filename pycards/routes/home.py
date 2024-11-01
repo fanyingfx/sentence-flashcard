@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import Blueprint, jsonify, request, redirect, url_for, render_template
 from ..models import get_db_connection
 
 from ..language import english
@@ -31,3 +31,4 @@ def submit():
             )
             db.commit()
     return redirect(url_for("main.home"))
+

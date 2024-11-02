@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 
-from ..models import get_db_connection
+from ..models import get_db_connection, TODAY_STR
 from ..language import english
 
 word_bp = Blueprint("word", __name__, url_prefix="/word")
@@ -50,9 +50,12 @@ def emphasize_word(word_attrs):
 @word_bp.route("/words")
 def show_words():
     with get_db_connection() as db:
-        cur = db.execute(
-            "SELECT words.id,words.word,sentences.content, definition,sentences.descriptions FROM words  LEFT JOIN sentences  ON words.sentence_id = sentences.id order by words.id desc"
-        )
+        sql = f"""SELECT words.id,words.word,sentences.content, definition,sentences.descriptions 
+            FROM words  LEFT JOIN sentences  ON words.sentence_id = sentences.id 
+            where sentences.create_date>= '{TODAY_STR}' 
+            order by words.id desc"""
+        # breakpoint()
+        cur = db.execute(sql)
         words = cur.fetchall()
         words = [emphasize_word(word) for word in words]
         return render_template("words.html", words=words)

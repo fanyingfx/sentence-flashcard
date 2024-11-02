@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, redirect, request, url_for, render_template
 
-from ..models import get_db_connection
+from ..models import get_db_connection, TODAY_STR
 from ..language import english
 
 sentence_bp = Blueprint("sentence", __name__, url_prefix="/sentence")
@@ -10,7 +10,7 @@ sentence_bp = Blueprint("sentence", __name__, url_prefix="/sentence")
 def manage_sentences():
     with get_db_connection() as conn:
         sentences = conn.execute(
-            "SELECT id,content,descriptions FROM sentences order by id desc"
+            f"SELECT id,content,descriptions FROM sentences where create_date>='{TODAY_STR}' order by id desc"
         ).fetchall()
         conn.close()
         sentences = [
@@ -26,6 +26,7 @@ def delete_sentence(sentence_id):
         db.execute("DELETE FROM sentences WHERE id = ?", (sentence_id,))
         db.commit()
         return redirect(url_for("sentence.manage_sentences"))
+
 
 @sentence_bp.route("/submit", methods=["POST"])
 def submit_json():

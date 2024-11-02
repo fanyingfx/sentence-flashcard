@@ -1,9 +1,11 @@
-from flask import Blueprint, jsonify, request, redirect, url_for, render_template
-from ..models import get_db_connection
+from flask import Blueprint, request, redirect, url_for, render_template
+from ..models import get_db_connection,TODAY_STR
 
 from ..language import english
 
 home_bp = Blueprint("main", __name__)
+# TODAY_STR= date.strftime("%Y-%m-%d")
+
 
 
 @home_bp.route("/")
@@ -11,7 +13,7 @@ def home():
     sentences = []
     with get_db_connection() as db:
         cur = db.execute(
-            "SELECT id,content,descriptions FROM sentences order by id desc"
+            f"SELECT id,content,descriptions FROM sentences where create_date>= '{TODAY_STR}' order by id desc"
         )
         sentences = cur.fetchall()
         sentences = [english.parse_sentence(row) for row in sentences]
@@ -31,4 +33,3 @@ def submit():
             )
             db.commit()
     return redirect(url_for("main.home"))
-

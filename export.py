@@ -44,6 +44,7 @@ def add_notes_to_anki(words):
         raise Exception(f"Error: {result['error']}")
     else:
         print("Notes added successfully")
+        print(f"Total count: {len(words)}")
 
 
 if __name__ == "__main__":
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     words = cur.fetchall()
     if not words:
         print("No new Words")
-        exit(1)
+        exit(0)
     word_ids = [word[4] for word in words]
     words = [emphasize_word(word) for word in words]
     add_notes_to_anki(words)

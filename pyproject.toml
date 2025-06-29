@@ -13,6 +13,7 @@ dependencies = [
     "bs4>=0.0.2",
     "python-lzo>=1.15",
     "lemminflect>=0.2.3",
+    "edge-tts>=7.0.2",
 ]
 
 [build-system]

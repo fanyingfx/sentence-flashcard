@@ -10,7 +10,7 @@ sentence_bp = Blueprint("sentence", __name__, url_prefix="/sentence")
 def manage_sentences():
     with get_db_connection() as conn:
         sentences = conn.execute(
-            f"SELECT id,content,descriptions FROM sentences where create_date>='{TODAY_STR}' order by id desc"
+            f"SELECT id,content,descriptions FROM sentences  order by id desc limit 20"
         ).fetchall()
         conn.close()
         sentences = [

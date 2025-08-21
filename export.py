@@ -1,37 +1,27 @@
-from datetime import datetime
+import os
 import sqlite3
 import requests
 import edge_tts
-import os
+from datetime import datetime
 from dataclasses import dataclass
+
+
 @dataclass
 class WordInfo:
-    word:str
-    sentence:str
-    definition:str
-    description:str
+    word: str
+    sentence: str
+    definition: str
+    description: str
 
-    def formated_sentence(self:'WordInfo')->str:
-        ''' emphasize_word_in_sentenc'''
+    def formated_sentence(self: "WordInfo") -> str:
+        """emphasize word in sentenc"""
 
         return self.sentence.replace(self.word, f"<b>{self.word}</b>")
-        
 
 
 TODAY_STR = datetime.today().strftime("%Y-%m-%d")
-# DATABASE_NAME = f"databases/{TODAY_STR}.sentences.db"
 DATABASE_NAME = "sentences.db"
 VOICE = "en-US-JennyNeural"
-
-
-# def emphasize_word_in_sentence(word_attrs):
-#     word = word_attrs[0]
-#     raw_content: str = word_attrs[1]
-#     definition = word_attrs[2]
-#     description = word_attrs[3]
-
-#     emphasized_content = raw_content.replace(word, f"<b>{word}</b>")
-#     return (word, emphasized_content, definition, description,raw_content)
 
 
 def clean_word(word: str) -> str:
@@ -49,8 +39,10 @@ def gen_audio(word, sentence) -> tuple[str, str]:
     """
     CWD = os.getcwd()
     cleaned_word = clean_word(word)
-    word_output_file = f"{CWD}/audios/{cleaned_word}.mp3"
-    word_sentence_file = f"{CWD}/audios/{cleaned_word}_sentence.mp3"
+    date_str = datetime.today().strftime("%Y%m%d%H%M%S")
+
+    word_output_file = f"{CWD}/audios/{cleaned_word}_{date_str}.mp3"
+    word_sentence_file = f"{CWD}/audios/{cleaned_word}_sentence_{date_Str}.mp3"
     word_communicate = edge_tts.Communicate(word, VOICE)
     word_communicate.save_sync(word_output_file)
 
@@ -59,7 +51,7 @@ def gen_audio(word, sentence) -> tuple[str, str]:
     return (word_output_file, word_sentence_file)
 
 
-def add_notes_to_anki(word_infos:list[WordInfo]):
+def add_notes_to_anki(word_infos: list[WordInfo]):
     notes = []
     for word_info in word_infos:
         (word_audio, sentence_audio) = gen_audio(word_info.word, word_info.sentence)
@@ -71,7 +63,7 @@ def add_notes_to_anki(word_infos:list[WordInfo]):
             "modelName": "MySentence",
             "fields": {
                 "word": word_info.word,
-                "sentence": word_info.sentence,
+                "sentence": word_info.formated_sentence(),
                 "definition": word_info.definition,
                 "description": word_info.description,
             },
@@ -115,7 +107,12 @@ def main():
         print("No new Words")
         exit(0)
     word_ids = [word[4] for word in word_raws]
-    words = [WordInfo(word=word[0],sentence=word[1],definition=word[2],description=word[3]) for word in word_raws]
+    words = [
+        WordInfo(
+            word=word[0], sentence=word[1], definition=word[2], description=word[3]
+        )
+        for word in word_raws
+    ]
     # words = [emphasize_word_in_sentence(word) for word in words]
     add_notes_to_anki(words)
     cur.executemany(
@@ -172,5 +169,3 @@ def add_note_demo():
 
 if __name__ == "__main__":
     main()
-    # gen_audio('hello',"hello, world")
-    # add_note_demo()

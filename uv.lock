@@ -88,12 +88,57 @@ wheels = [
 ]
 
 [[package]]
+name = "anyio"
+version = "4.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "idna" },
+    { name = "sniffio" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/95/7d/4c1bd541d4dffa1b52bd83fb8527089e097a106fc90b467a7313b105f840/anyio-4.9.0.tar.gz", hash = "sha256:673c0c244e15788651a4ff38710fea9675823028a6f08a5eda409e0c9840a028", size = 190949, upload-time = "2025-03-17T00:02:54.77Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a1/ee/48ca1a7c89ffec8b6a0c5d02b89c305671d5ffd8d3c94acf8b8c408575bb/anyio-4.9.0-py3-none-any.whl", hash = "sha256:9f76d541cad6e36af7beb62e978876f3b41e3e04f2c1fbf0884604c0a9c4d93c", size = 100916, upload-time = "2025-03-17T00:02:52.713Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "25.3.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/5a/b0/1367933a8532ee6ff8d63537de4f1177af4bff9f3e829baf7331f595bb24/attrs-25.3.0.tar.gz", hash = "sha256:75d7cefc7fb576747b2c81b4442d4d4a1ce0900973527c011d1030fd3bf4af1b", size = 812032, upload-time = "2025-03-13T11:10:22.779Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/77/06/bb80f5f86020c4551da315d78b3ab75e8228f89f0162f2c3a819e407941a/attrs-25.3.0-py3-none-any.whl", hash = "sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3", size = 63815, upload-time = "2025-03-13T11:10:21.14Z" },
+]
+
+[[package]]
+name = "azure-cognitiveservices-speech"
+version = "1.45.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "azure-core" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d5/ff/ea861803fb4ac6e407d46f36f30c8f63c9214c6a72d66b62348a296a49a6/azure_cognitiveservices_speech-1.45.0-py3-none-macosx_10_14_x86_64.whl", hash = "sha256:09466a0f7c63652d1efde24acb9b5d8a500e880c2c22505984d53fec3ec705e4", size = 7489416, upload-time = "2025-07-10T22:24:14.807Z" },
+    { url = "https://files.pythonhosted.org/packages/19/d3/648d2d4e5033d6e84651248fa6ec06991a0e04e0e5e1f414b04c2a5e1eb9/azure_cognitiveservices_speech-1.45.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:940cf5f815231536b19911bc361ff363a1494ba696257d076726f4288547ff14", size = 7342303, upload-time = "2025-07-10T22:24:17.121Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/36/623ffc42992f5fd886f189d5778ee4544711a92d9b5e6f64e0a61e6514dd/azure_cognitiveservices_speech-1.45.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:317fc21f0fff3bbb8eb35d8db48669cd983a75c40740c60babe2c6476087e638", size = 41928888, upload-time = "2025-07-10T22:24:19.403Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/7c/b0d430b106b05087be1df6d93f461d225ecc549e287e09a7005d4dca43ac/azure_cognitiveservices_speech-1.45.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:1f08f549d92ccb548df5b72049f973075ad2f6c3377a23d180921967af6496d5", size = 41709489, upload-time = "2025-07-10T22:24:22.642Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/74/09e1cba9c8d3ec6820ccd5a1a0fe5e9b760f3a6e8ed32c3fe007cee92461/azure_cognitiveservices_speech-1.45.0-py3-none-win32.whl", hash = "sha256:9129845b18f24f446023762db73a03c5b53e47999a08c5744b108d07e2ecbe49", size = 2168530, upload-time = "2025-07-10T22:24:25.244Z" },
+    { url = "https://files.pythonhosted.org/packages/1c/10/ea33ba7079b018370c2604a857251a92da61042355bbb65b045e36860faf/azure_cognitiveservices_speech-1.45.0-py3-none-win_amd64.whl", hash = "sha256:eca91493183134fa6e54070e9ae96849732aaae0c651de955c190ab9643d3bbc", size = 2428705, upload-time = "2025-07-10T22:24:26.45Z" },
+    { url = "https://files.pythonhosted.org/packages/a8/26/9f0983fab26dc15d347eed7ca0700f905fa6a0bb6591702f6c99281ede2e/azure_cognitiveservices_speech-1.45.0-py3-none-win_arm64.whl", hash = "sha256:66d35847669313c9deeb09070c24e92f8e8cb06a8f792e5f6a5e75a4110cf71e", size = 2221054, upload-time = "2025-07-10T22:24:28.019Z" },
+]
+
+[[package]]
+name = "azure-core"
+version = "1.35.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+    { name = "six" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ce/89/f53968635b1b2e53e4aad2dd641488929fef4ca9dfb0b97927fa7697ddf3/azure_core-1.35.0.tar.gz", hash = "sha256:c0be528489485e9ede59b6971eb63c1eaacf83ef53001bfe3904e475e972be5c", size = 339689, upload-time = "2025-07-03T00:55:23.496Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d4/78/bf94897361fdd650850f0f2e405b2293e2f12808239046232bdedf554301/azure_core-1.35.0-py3-none-any.whl", hash = "sha256:8db78c72868a58f3de8991eb4d22c4d368fae226dac1002998d6c50437e7dad1", size = 210708, upload-time = "2025-07-03T00:55:25.238Z" },
 ]
 
 [[package]]
@@ -347,6 +392,43 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/22/c5/ff64272679471658d6c6313f647d0ad0a1a254fe73d26c60cf263e0bd6d0/fugashi-1.3.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4e24864e92ad3acf3c0b8f645e33d543fe569544bb6ee9728cb281325aa76d06", size = 605926, upload-time = "2024-04-15T13:09:40.395Z" },
     { url = "https://files.pythonhosted.org/packages/d9/0f/dfceef3b7e26da34556b8c3ab33a901977da069726da012bc57cfa2749a7/fugashi-1.3.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ea942e45214a99844146ce0e0f1ac43bff6e2ccbf6d1cbfde4f2bed9ca0951b1", size = 622075, upload-time = "2024-04-15T12:49:57.915Z" },
     { url = "https://files.pythonhosted.org/packages/86/d9/49484b50c6df110e1a24bc71958899ddd454e7d48227696d29503d91ed1e/fugashi-1.3.2-cp312-cp312-win_amd64.whl", hash = "sha256:da61498017e5cbee65c6eff88a13e17b45a5e3b0428733e99168344b8ff95da5", size = 497750, upload-time = "2024-04-15T12:50:47.676Z" },
+]
+
+[[package]]
+name = "h11"
+version = "0.16.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/01/ee/02a2c011bdab74c6fb3c75474d40b3052059d95df7e73351460c8588d963/h11-0.16.0.tar.gz", hash = "sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1", size = 101250, upload-time = "2025-04-24T03:35:25.427Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86", size = 37515, upload-time = "2025-04-24T03:35:24.344Z" },
+]
+
+[[package]]
+name = "httpcore"
+version = "1.0.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "certifi" },
+    { name = "h11" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/94/82699a10bca87a5556c9c59b5963f2d039dbd239f25bc2a63907a05a14cb/httpcore-1.0.9.tar.gz", hash = "sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8", size = 85484, upload-time = "2025-04-24T22:06:22.219Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl", hash = "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55", size = 78784, upload-time = "2025-04-24T22:06:20.566Z" },
+]
+
+[[package]]
+name = "httpx"
+version = "0.28.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "certifi" },
+    { name = "httpcore" },
+    { name = "idna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406, upload-time = "2024-12-06T15:37:23.222Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad", size = 73517, upload-time = "2024-12-06T15:37:21.509Z" },
 ]
 
 [[package]]
@@ -665,10 +747,12 @@ name = "pycards"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "azure-cognitiveservices-speech" },
     { name = "bs4" },
     { name = "edge-tts" },
     { name = "flask" },
     { name = "fugashi" },
+    { name = "httpx" },
     { name = "lemminflect" },
     { name = "numpy" },
     { name = "pip" },
@@ -678,10 +762,12 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "azure-cognitiveservices-speech", specifier = ">=1.45.0" },
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "edge-tts", specifier = ">=7.0.2" },
     { name = "flask", specifier = ">=3.0.3" },
     { name = "fugashi", specifier = ">=1.3.2" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "lemminflect", specifier = ">=0.2.3" },
     { name = "numpy", specifier = "==1.26.3" },
     { name = "pip", specifier = ">=24.2" },
@@ -800,6 +886,15 @@ wheels = [
 ]
 
 [[package]]
+name = "six"
+version = "1.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+]
+
+[[package]]
 name = "smart-open"
 version = "7.0.4"
 source = { registry = "https://pypi.org/simple" }
@@ -809,6 +904,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/06/84/c6e6276a72a78996f11118b8bc1d9e9b619aa78201f408210f4a584bd377/smart_open-7.0.4.tar.gz", hash = "sha256:62b65852bdd1d1d516839fcb1f6bc50cd0f16e05b4ec44b52f43d38bcb838524", size = 71149, upload-time = "2024-03-26T08:42:54.23Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/65/12/cc24847b4b0b124501a33cd8f7963f79f6f6584bc7f2f4fc16bbbaa54c8f/smart_open-7.0.4-py3-none-any.whl", hash = "sha256:4e98489932b3372595cddc075e6033194775165702887216b65eba760dfd8d47", size = 61215, upload-time = "2024-03-26T08:42:56.979Z" },
+]
+
+[[package]]
+name = "sniffio"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a2/87/a6771e1546d97e7e041b6ae58d80074f81b7d5121207425c964ddf5cfdbd/sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc", size = 20372, upload-time = "2024-02-25T23:20:04.057Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2", size = 10235, upload-time = "2024-02-25T23:20:01.196Z" },
 ]
 
 [[package]]
